@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 import Home from '@/components/Home'
-import Patient from '@/components/PreviousResults'
+import PreviousResults from '@/components/PreviousResults'
 
 let router = new VueRouter({
   routes: [
