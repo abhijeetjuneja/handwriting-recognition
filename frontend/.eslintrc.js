@@ -2,7 +2,7 @@ module.exports = {
     "rules": {
         "no-console":'off',
         "indent": [
-            2,
+            4,
             "tab"
         ],
         "quotes": [
