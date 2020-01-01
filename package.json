@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Handwriting recognition using Vue.js Frontend and Node.js Express Backend.",
     "scripts": {},
-    "author": "",
+    "author": "Abhijeet Juneja",
     "license": "MIT",
     "devDependencies": {},
     "dependencies": {
