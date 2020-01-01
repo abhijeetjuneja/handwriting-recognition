@@ -11,8 +11,8 @@
         <b-navbar-nav class="ml-auto">
 
             <b-navbar-nav>
-                <b-nav-item href="/">Home</b-nav-item>
-                <b-nav-item href="/previous-results">Previous Results</b-nav-item>
+                <b-nav-item href="#/"  v-show="currentView === 'PreviousResults'">Home</b-nav-item>
+                <b-nav-item href="#/previous-results" v-show="currentView === 'Home'">Previous Results</b-nav-item>
             </b-navbar-nav>
         </b-navbar-nav>
         </b-collapse>
@@ -27,20 +27,25 @@ import axios from 'axios'
 import router from '../router'
 
 export default {
-  name: 'Navigation',
-  data () {
-    return {
+    name: 'Navigation',
+    data () {
+        return {
+            currentView:''
+        }
+    },
+    mounted() {
+        this.currentView = router.currentRoute.name  
+    },
+    computed: {
 
+    },
+    watch:{
+        $route (to, from){
+            this.currentView = to.name
+        }
+    }, 
+    methods: {
     }
-  },
-  mounted() {
-    
-  },
-  computed: {
-
-  },
-  methods: {
-  }
 }
 </script>
 
