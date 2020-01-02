@@ -39,23 +39,34 @@ imageRouter.post('/add',  upload.single('file'), (req, res, next) => {
     };
     const gcsname = uuidv4() + req.file.originalname
     bucket.upload(req.file.path, options)
-        .then((result) => {
-            return result[0].getMetadata() 
+        .then((uploadedImage) => {
+            return uploadedImage[0].getMetadata() 
         })
-        .then(results => {
-            const imageUrl = results[0].mediaLink
+        .then(metadata => {
+            const imageUrl = metadata[0].mediaLink
             let image = {
                 source: {imageUri: imageUrl}
             };
             client.textDetection( {image})
-                .then(result => {
-                    res.status(200).json({'result': {'imageUrl': imageUrl, 'text': result[0].fullTextAnnotation.text},'message': 'Result added successfully'})
+                .then(detected => {
+                        const result = new resultModel({'imageUrl': imageUrl, 'text': detected[0].fullTextAnnotation.text})
+                        result.save()
+                            .then( newResult => {
+                                console.log('Text Detection Successfull and Result added successfully')
+                                res.status(200).json({'result': {'imageUrl': imageUrl, 'text': detected[0].fullTextAnnotation.text},'message': 'Text Detection Successfull and Result added successfully'})
+                            })
+                            .catch( err => {
+                                console.log('Error when saving to database')
+                                next(new errorHandler(400,'Error when saving to database'))
+                            })
                 })
                 .catch(err => {
+                    console.log('Error in text detection')
                     next(new errorHandler(400,'Error in text detection'))
                 })
         })
         .catch(err => {
+            console.log('Error when saving to Google Cloud Storage')
             next(new errorHandler(400,'Error when saving to Google Cloud Storage'))
         })
 })
