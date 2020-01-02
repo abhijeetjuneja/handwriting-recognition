@@ -18,8 +18,8 @@
             <b-navbar-nav class="ml-auto">
 
                 <b-navbar-nav>
-                    <b-nav-item href="/"  v-show="currentView === 'PreviousResults'" style="color:white;">Home</b-nav-item>
-                    <b-nav-item href="/previous-results" v-show="currentView === 'Home'" style="color:white;">Previous Results</b-nav-item>
+                    <b-nav-item href="/"  v-show="currentView !== 'Home'" style="color:white;">Home</b-nav-item>
+                    <b-nav-item href="/previous-results" v-show="currentView !== 'PreviousResults'" style="color:white;">Previous Results</b-nav-item>
                 </b-navbar-nav>
             </b-navbar-nav>
             </b-collapse>
