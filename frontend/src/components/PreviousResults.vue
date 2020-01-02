@@ -1,35 +1,45 @@
 <template>
-    <b-row>
+    <b-row v-show="firstLoad">
 		<b-col sm="6" xs="12" offset-sm="3" offset-xs="0">
-            <br /><br />
-            <b-card>
-                <h5>Results</h5>
-                <hr />
-				<b-pagination
-				v-model="page"
-				:total-rows="totalPages"
-				:per-page="limit"
-				align="center"
-				></b-pagination>
-				<b	r />
-				<b-row class="result-container" v-show="loader === false" v-for="result in paginate" v-bind:key="result.imageUrl">
-					<b-col sm="6" xs="12" class="result-container">
-						<b-img v-bind:src="result.imageUrl" fluid></b-img>
-					</b-col>
-					<b-col sm="6" xs="12" >
-						<b-form-textarea
-						class="result-container"
-						v-model="result.text" 
-						></b-form-textarea>
-					</b-col>
-				</b-row>
-				<div class="result-container text-center" v-show="loader === true">
-					<br /><br />
-					<b-spinner class="ml-auto" variant="primary" type="grow" style="width: 3rem; height: 3rem;" label="Spinning"></b-spinner>
-					<br /><br />
-				</div>
-            </b-card>
-            
+            <br />
+			<transition appear
+				mode="out-in"
+    			appear-class="invisible"
+    			appear-to-class="animated bounceIn"
+				enter-active-class="animated bounceIn"
+				leave-active-class="animated bounceOut"
+			>
+				<b-card style="background: rgba(0,0,0,0.1)!important;">
+					<h5>Results</h5>
+					<hr />
+					<b-pagination
+					v-model="page"
+					:total-rows="totalPages"
+					:per-page="limit"
+					align="center"
+					></b-pagination>
+					<br />
+					<b-row class="result-container" v-show="loader === false" v-for="result in paginate" v-bind:key="result.imageUrl">
+						<b-col sm="6" xs="12" class="result-container">
+							<b-img v-bind:src="result.imageUrl" fluid></b-img>
+						</b-col>
+						<b-col sm="6" xs="12" >
+							<p><b>Generated Text :</b></p>
+							<b-form-textarea
+							class="result-container"
+							v-model="result.text" 
+							></b-form-textarea>
+						</b-col>
+					</b-row>
+					<div class="result-container text-center" v-show="loader === true">
+						<br /><br />
+						<b-spinner class="ml-auto" variant="light" type="grow" style="width: 3rem; height: 3rem;" label="Spinning"></b-spinner>
+						<br /><br />
+					</div>
+				</b-card>
+				
+            </transition>
+			<br /><br />
         </b-col>
     </b-row>
 </template>
@@ -44,7 +54,8 @@ export default {
     name: 'PreviousResults',
     data () {
         return {
-            loader: true,
+			loader: true,
+			firstLoad: true,
 			results : [],
 			page: 1,
 			limit: 1,
@@ -95,6 +106,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
+.form-control {
+  background: transparent!important;
+  border:none!important;
+  color:white!important;
+}
 </style>
