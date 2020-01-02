@@ -15,6 +15,11 @@
     * Fetch Results from DB.
     * Animations and Transitions.
 
+## Screenshots
+
+![Alt text](/screenshots/Home.png?raw=true "Home View before Processing")
+![Alt text](/screenshots/Home-Result.png?raw=true "Home View after Processing")
+![Alt text](/screenshots/Results.png?raw=true "Previous Results View")
 
 ## Prerequisites
 
