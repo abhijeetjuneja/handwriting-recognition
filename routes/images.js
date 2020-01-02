@@ -49,11 +49,11 @@ imageRouter.post('/add',  upload.single('file'), (req, res, next) => {
             };
             client.textDetection( {image})
                 .then(detected => {
-                        const result = new resultModel({'imageUrl': imageUrl, 'text': detected[0].fullTextAnnotation.text})
+                        const result = new resultModel({'imageUrl': imageUrl, 'text': detected[0].fullTextAnnotation != null ? detected[0].fullTextAnnotation.text : ''})
                         result.save()
                             .then( newResult => {
                                 console.log('Text Detection Successfull and Result added successfully')
-                                res.status(200).json({'result': {'imageUrl': imageUrl, 'text': detected[0].fullTextAnnotation.text},'message': 'Text Detection Successfull and Result added successfully'})
+                                res.status(200).json({'result': {'imageUrl': newResult.imageUrl, 'text': newResult.text},'message': 'Text Detection Successfull and Result added successfully'})
                             })
                             .catch( err => {
                                 console.log('Error when saving to database')

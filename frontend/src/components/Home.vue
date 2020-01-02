@@ -1,7 +1,7 @@
 <template>
     <b-row>
         <b-col sm="6" xs="12" offset-sm="3" offset-xs="0">
-            <br /><br />
+            <br />
             <b-card>
                 <h5>Upload Image to find Text</h5>
                 <hr />
@@ -13,12 +13,11 @@
                     <b-row class="result-container" v-show="loader === false">
                         <b-col sm="6" xs="12" class="result-container">
                             <b-img v-bind:src="imageUrl" fluid v-show="imageUrl !== ''"></b-img>
-                            <p v-show="imageUrl === ''">No Image chosen</p>
+                            <p v-show="imageUrl === ''">Choose an Image and click generate</p>
                         </b-col>
                         <b-col sm="6" xs="12" >
                             <b-form-textarea
                             class="result-container"
-                            placeholder="Please select an Image first"
                             v-model="text"
                             ></b-form-textarea>
                         </b-col>
@@ -29,11 +28,12 @@
                     </div>
                     <br />
                     <span v-show="loader === true"><b>Processing ...</b></span>
-                    <br />
+                    <span style="color:red;" v-show="text === '' && imageUrl !== ''"><b>Sorry there was no text detected in the image, pick a different one !</b></span>
+                    <br /><br />
                     <b-button v-bind:disabled="valid == false" @click="onSubmit">Generate Text</b-button>
                 </b-form>    
             </b-card>
-            
+            <br /><br /><br /><br />
         </b-col>
 
     </b-row>
@@ -85,7 +85,7 @@ export default {
                 
         },
         onSubmit(){
-            const that = this
+            let that = this
             this.loader = true
             const formData = new FormData()
             formData.append('file', this.file)
