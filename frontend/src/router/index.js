@@ -1,8 +1,10 @@
 import VueRouter from 'vue-router'
 import Home from '@/components/Home'
 import PreviousResults from '@/components/PreviousResults'
+import NotFound from '@/components/NotFound'
 
 let router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,6 +15,11 @@ let router = new VueRouter({
       path: '/previous-results',
       name: 'PreviousResults',
       component: PreviousResults
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
     }
   ]
 })
