@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const express = require('express');
-const resultRouter = express.Router();
+const express = require('express')
+const resultRouter = express.Router()
 const resultModel = require('../models/result')
 const errorHandler = require('../modules/errorHandler')
 

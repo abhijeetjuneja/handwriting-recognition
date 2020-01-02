@@ -1,20 +1,25 @@
+require('dotenv').config({path:'./.env'});
+
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const result = require('./routes/result')
+const results = require('./routes/results')
+const images = require('./routes/images')
 
 //Import mongoose module
 const mongoose = require('./modules/mongoose')
 
 const app = express()
-
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(cors())
 
 //Result router
-app.use('/api/results/', result)
+app.use('/api/results/', results)
+
+//Image router
+app.use('/api/images/', images)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
