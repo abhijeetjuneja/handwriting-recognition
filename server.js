@@ -1,30 +1,46 @@
+require('dotenv').config({path:'./.env'})
+
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const result = require('./routes/result')
+const results = require('./routes/results')
+const images = require('./routes/images')
+const morgan = require('morgan')
 
 //Import mongoose module
 const mongoose = require('./modules/mongoose')
 
 const app = express()
 
-app.use(express.static('public'))
+// Point to frontend
+app.use(express.static(path.join(__dirname, '/frontend/dist')))
+
+// log to console
+app.use(morgan('dev'))
+
 app.use(bodyParser.json())
 app.use(cors())
 
 //Result router
-app.use('/api/results/', result)
+app.use('/api/results/', results)
+
+//Image router
+app.use('/api/images/', images)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('404 Not Found')
-    err.status = 404
-    next(err)
+app.use((req, res, next) => {
+    if(req.url.split('/')[1] == 'api'){
+        var err = new Error('404 Not Found')
+        err.status = 404
+        next(err)
+    }
+    else
+        next()
 })
   
   // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message
     res.locals.error = req.app.get('env') === 'development' ? err : {}
@@ -32,6 +48,10 @@ app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500)
     res.json({'message': err.message || 'Error occurred on the Server. Apologies :( '})
+})
+
+app.get('*',(req,res) =>{
+    res.sendFile(path.join(__dirname, '/frontend/dist/index.html'))
 })
 
 const port = process.env.PORT || 4000

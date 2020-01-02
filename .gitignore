@@ -1,4 +1,7 @@
 node_modules/
-dist/
+secrets/
+uploads/
 npm-debug.log*
+.env
 package-lock.json
+
